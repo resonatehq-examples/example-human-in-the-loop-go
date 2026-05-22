@@ -169,7 +169,7 @@ func main() {
 			// The SDK codec encodes values as: JSON → base64 → quoted string
 			// stored in Value.Data. We replicate that here because Resonate
 			// does not expose a public Codec() accessor on the Resonate type
-			// (resonate-sdk-go issue #9 — the missing Promises sub-client
+			// (resonate-sdk-go issue #28 — the missing Promises sub-client
 			// would provide a higher-level Resolve(id, v) that handles this
 			// encoding automatically).
 			//
@@ -196,7 +196,7 @@ func main() {
 			// call lives behind an HTTP handler, a CLI subcommand, or any other
 			// mechanism that accepts the promise ID and a resolution payload.
 			//
-			// Friction note (resonate-sdk-go issue #9): PromiseSettle lives on
+			// Friction note (resonate-sdk-go issue #28): PromiseSettle lives on
 			// the internal Sender type, reached via r.Sender(). There is no
 			// higher-level Resonate.Promises sub-client yet. A future
 			// Promises().Resolve(id, value) API would handle both the encoding

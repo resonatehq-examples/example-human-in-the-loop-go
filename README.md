@@ -51,15 +51,24 @@ func approvalWorkflow(ctx *resonate.Context, req ReviewRequest) (string, error) 
 The simulator goroutine resolves the promise from outside the workflow:
 
 ```go
+// Encode "approved" the same way the SDK's codec encodes values:
+// JSON → base64 → quoted string, stored in Value.Data.
+rawJSON, _ := json.Marshal("approved")
+b64 := base64.StdEncoding.EncodeToString(rawJSON)
+quotedB64, _ := json.Marshal(b64)
+val := resonate.Value{Data: json.RawMessage(quotedB64)}
+
 req := resonate.PromiseSettleReq{
     ID:    promiseID,
     State: resonate.SettleStateResolved,
-    Value: val, // e.g. NewValue("approved")
+    Value: val,
 }
 rec, err := r.Sender().PromiseSettle(ctx, req)
 ```
 
-> **Note — resonate-sdk-go issue #9:** `PromiseSettle` is on the internal `Sender` type, reached via `r.Sender()`. There is no higher-level `Resonate.Promises` sub-client yet. In production you would wrap this in an HTTP handler or CLI command rather than calling it directly.
+> **Note — resonate-sdk-go issue #28:** `PromiseSettle` is on the internal `Sender` type, reached via `r.Sender()`. There is no higher-level `Resonate.Promises` sub-client yet. In production you would wrap this in an HTTP handler or CLI command rather than calling it directly.
+>
+> **Don't reach for `resonate.NewValue` here** — there's a codec mismatch with `Future.Await` (raw JSON vs. base64-wrapped JSON). See [#22](https://github.com/resonatehq/resonate-sdk-go/issues/22).
 
 ## Production deployment pattern
 
@@ -70,7 +79,13 @@ In a real system you would replace the simulator goroutine with an external trig
 ```go
 func approveHandler(w http.ResponseWriter, r *http.Request) {
     promiseID := r.URL.Query().Get("id")
-    val, _ := resonate.NewValue("approved")
+
+    // SDK-codec-compatible encoding: JSON → base64 → quoted string.
+    rawJSON, _ := json.Marshal("approved")
+    b64 := base64.StdEncoding.EncodeToString(rawJSON)
+    quotedB64, _ := json.Marshal(b64)
+    val := resonate.Value{Data: json.RawMessage(quotedB64)}
+
     _, err := resonateClient.Sender().PromiseSettle(r.Context(), resonate.PromiseSettleReq{
         ID:    promiseID,
         State: resonate.SettleStateResolved,
@@ -79,6 +94,8 @@ func approveHandler(w http.ResponseWriter, r *http.Request) {
     // ...
 }
 ```
+
+> Don't reach for `resonate.NewValue` here — there's a codec mismatch with `Future.Await`. See [#22](https://github.com/resonatehq/resonate-sdk-go/issues/22).
 
 **CLI command:**
 
