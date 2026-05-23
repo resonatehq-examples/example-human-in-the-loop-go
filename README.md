@@ -6,6 +6,12 @@
   </picture>
 </p>
 
+<p align="center">
+  <a href="https://resonatehq.github.io/examples-ci/">
+    <img src="https://img.shields.io/endpoint?url=https://resonatehq.github.io/examples-ci/status/example-human-in-the-loop-go.json" alt="examples-ci status">
+  </a>
+</p>
+
 # Human-in-the-Loop | Resonate Go SDK
 
 A workflow that suspends on an external approval and resumes only when a human (or external system) resolves the latent durable promise.
