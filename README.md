@@ -198,6 +198,7 @@ example-human-in-the-loop-go/
 - [Durable execution concepts](https://docs.resonatehq.io/concepts) — what makes invocations durable + how the runtime resumes them.
 - [Human-in-the-Loop Pattern](https://docs.resonatehq.io/get-started/examples/human-in-the-loop) — full pattern documentation.
 - [`example-durable-sleep-go`](https://github.com/resonatehq-examples/example-durable-sleep-go) — similar suspension mechanics using a timer promise rather than a latent promise.
+- **Coming from Temporal?** See [MIGRATING-FROM-TEMPORAL.md](MIGRATING-FROM-TEMPORAL.md) — a side-by-side port of the matching `temporalio/samples-go` example.
 
 ## Community
 
