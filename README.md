@@ -118,7 +118,7 @@ The workflow body itself is identical in every deployment — only the external 
   ```
   brew install resonatehq/tap/resonate
   ```
-  Other install paths: <https://docs.resonatehq.io/get-started/install>.
+  Other install paths: <https://docs.resonatehq.io/get-started/quickstart>.
 
 ## Setup
 
@@ -195,7 +195,7 @@ example-human-in-the-loop-go/
 ## Next steps
 
 - [Get started](https://docs.resonatehq.io/get-started) — install paths + first-program walkthrough.
-- [Durable execution concepts](https://docs.resonatehq.io/concepts) — what makes invocations durable + how the runtime resumes them.
+- [Durable execution concepts](https://docs.resonatehq.io/learn/durable-execution) — what makes invocations durable + how the runtime resumes them.
 - [Human-in-the-Loop Pattern](https://docs.resonatehq.io/get-started/examples/human-in-the-loop) — full pattern documentation.
 - [`example-durable-sleep-go`](https://github.com/resonatehq-examples/example-durable-sleep-go) — similar suspension mechanics using a timer promise rather than a latent promise.
 - **Coming from Temporal?** See [MIGRATING-FROM-TEMPORAL.md](MIGRATING-FROM-TEMPORAL.md) — a side-by-side port of the matching `temporalio/samples-go` example.
